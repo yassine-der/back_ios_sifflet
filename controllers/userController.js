@@ -29,6 +29,7 @@ const getuserProfile = AsyncHandler(async(req,res) => {
 
     if(user){
         res.json({
+            photo: user.photo,
             _id : user._id,
             nom: user.nom,
             prenom : user.prenom,
@@ -52,8 +53,9 @@ const registerUser = AsyncHandler(async(req,res) => {
        res.status(400)
        throw new Error('user Aleardy exists')
    }
-
+   
    const user = await User.create({
+       photo: req.file.path,
        nom,
        prenom,
        email,
@@ -62,11 +64,15 @@ const registerUser = AsyncHandler(async(req,res) => {
 
    })    
    if(user){
-       res.status(201).json({ _id : user._id,
+       res.status(201).json({
+           photo:user.phot,
+            _id : user._id,
         nom: user.nom,
         prenom : user.prenom,
         email: user.email,
-        isProprietaireDeStade : user.isProprietaireDeStade
+        isProprietaireDeStade : user.isProprietaireDeStade,
+        photo: user.photo,
+
         //token: generateToken(user._id)
     })
    
@@ -88,13 +94,13 @@ const updateUserProfile = AsyncHandler(async(req,res) => {
         
         const updateUser = await user.save()
 
-        res.json({
-            _id : updateUser._id,
+        res.status(201).json({
+            //_id : updateUser._id,
             nom: updateUser.nom,
             prenom : updateUser.prenom,
             email: updateUser.email,
             isProprietaireDeStade : updateUser.isProprietaireDeStade,
-            token: generateToken(updateUser._id)
+            //token: generateToken(updateUser._id)
 
 
         })
@@ -139,6 +145,9 @@ const updateUser = AsyncHandler(async(req,res) => {
         user.prenom = req.body.prenom || user.prenom
         user.email = req.body.email || user.email
         user.isProprietaireDeStade = req.body.isProprietaireDeStade
+        if(req.body.motdepasse){
+            user.motdepasse = req.body.motdepasse
+        }
         
         const updateUser = await user.save()
 

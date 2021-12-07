@@ -22,6 +22,7 @@ const addStade = AsyncHandler(async(req,res)=>{
     const{nom,address,discription/*,payementMethods,taxPrice*/} = req.body
 
     const stade = await Stade.create({
+        photo: req.file.path,
         nom,
         user:req.user._id,
         address,
@@ -50,7 +51,7 @@ const updateStadeToPaid = AsyncHandler(async(req,res)=>{
         }*/
         const updatedStade = await stade.save()
 
-        res.json(updatedStade)
+        res.status(200).json(updatedStade)
     }
     else{
         res.status(404)

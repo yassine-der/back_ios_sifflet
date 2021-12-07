@@ -41,4 +41,4 @@ const addMatch = AsyncHandler(async(req,res)=>{
 }
 )
 
-module.exports= {getMatch, getMatchId,addMatch}
+module.exports= {getMatch, getMatchId,  addMatch}

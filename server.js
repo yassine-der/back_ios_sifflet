@@ -3,6 +3,8 @@ const dotenv = require('dotenv')
 const connectDB = require('./config/db')
 const {notFound,errorHandler} = require('./middlware/errorMiddlware')
 const path = require('path')
+var bodyParser = require('body-parser')
+
 const morgan = require('morgan')
 
 const joueurRouter = require('./routes/joueurRoutes')
@@ -20,6 +22,11 @@ dotenv.config()
 connectDB()
 
 const app = express()
+app.use(bodyParser.urlencoded({ extended: false }))
+ 
+// parse application/json
+app.use(bodyParser.json())
+
 
 if(process.env.NODE_ENV === 'development'){
     app.use(morgan('dev'))
@@ -37,18 +44,22 @@ app.use('/equipe',equipeRouter)
 app.use('/ligue',ligueRouter)
 app.use('/arbitre',arbitreRouter)
 app.use('/match',matchRouter)
-app.use('/upload',uploadRouter)
+//app.use('/upload',uploadRouter)
 app.use('/stade',stadeRouter)
 
+//app.use(express.static(path.join(__dirname, "/uploads")))
+//app.use('/uploads', express.static("./uploads"))
+
+
 //const __dirname = path.resolve()
-app.use('/uploads',express.static(path.join(__dirname)))
+app.use('/uploads',express.static('uploads'))
 
 app.use(notFound)
 
 app.use(errorHandler)
 
 
-
+ 
 
 
 const PORT = process.env.PORT || 3000
