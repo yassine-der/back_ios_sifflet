@@ -21,6 +21,14 @@ const getJoueuryId = AsyncHandler(async(req,res) => {
 const addJoueur = AsyncHandler(async(req,res)=>{
     const{nom,age, taille,longueur,num,discription} = req.body
 
+    const joueurExist = await Joueur.findOne({nom}) 
+
+    if(joueurExist){
+        res.status(400)
+        throw new Error('Joueur Aleardy exists')
+    }
+
+
     const joueur = await Joueur.create({
         nom,
         user:req.user._id,

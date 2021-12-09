@@ -26,7 +26,7 @@ const {getEquipe, getEquipeId,addEquipe,deleteEquipe,addJoueurToEquipe} = requir
 const {protect,ProprietaireDeStade} = require('../middlware/authmiddlware')
 
 //all
-router.route('/').get(protect,getEquipe).post(protect,ProprietaireDeStade,upload.single('photo'),addEquipe)
+router.route('/').get(protect,getEquipe).post(protect,ProprietaireDeStade,upload.single('image'),addEquipe)
 //one
 router.route('/:id').get(getEquipeId,protect).put(protect,addJoueurToEquipe)
 

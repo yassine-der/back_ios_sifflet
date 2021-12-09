@@ -20,6 +20,15 @@ const getArbitreId = AsyncHandler(async(req,res) => {
 const addArbitre = AsyncHandler(async(req,res)=>{
     const{nom,age, num,discription} = req.body
 
+    const nomExist = await Stade.findOne({nom}) 
+    const numExist = await Stade.findOne({num}) 
+
+    
+    if(nomExist && numExist ){
+        res.status(400)
+        throw new Error('Arbitre ou Num Aleardy exists')
+    }
+
     const arbitre = new Arbitre({
         nom,
         user:req.user._id,

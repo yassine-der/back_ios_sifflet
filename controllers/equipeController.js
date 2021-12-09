@@ -20,13 +20,14 @@ const getEquipeId = AsyncHandler(async(req,res) => {
 })
 
 const addEquipe = AsyncHandler(async(req,res)=>{
-    const{nom,discription, equipecapacite} = req.body
+    const{nom,discription, /*equipecapacite*/} = req.body
 
     const equipe = await Equipe.create({
+        image: req.file.path,
         nom,
         user:req.user._id,
         discription,
-        equipecapacite,
+        //equipecapacite,
         joueurs_id:[],
         point:0,
         win: 0,
@@ -43,7 +44,7 @@ const addJoueurToEquipe = AsyncHandler(async(req,res)=>{
     if(equipe){
         equipe.nom = equipe.nom,
         equipe.discription = equipe.discription,
-        equipe.equipecapacite = equipe.equipecapacite,
+        //equipe.equipecapacite = equipe.equipecapacite,
         equipe.joueurs_id.push(req.body.joueurs_id)
         equipe.win = equipe.win,
         equipe.lose = equipe.lose,

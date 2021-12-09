@@ -22,13 +22,13 @@ const storage = multer.diskStorage({
   const upload = multer({storage: storage,fileFilter: fileFilter
       })
 
-const { getStade,getStadeId,addStade,updateStadeToPaid,getMystade} = require('../controllers/stadeController')
+const { getStade,getStadeId,addStade,updateStadeToPaid,getMystade,addLigueToStade} = require('../controllers/stadeController')
 const {protect,ProprietaireDeStade } = require('../middlware/authmiddlware')
 //all
-router.route('/').get(getStade).post(protect,ProprietaireDeStade,upload.single('photo'),addStade)
+router.route('/').get(getStade).post(protect,ProprietaireDeStade,upload.single('image'),addStade)
 router.route('/my').get(protect,ProprietaireDeStade,getMystade)
 //one
-router.route('/:id').get(protect,getStadeId)
+router.route('/:id').get(protect,getStadeId).put(protect,ProprietaireDeStade,addLigueToStade)
 router.route('/:id/pay').put(protect,updateStadeToPaid)
 
   

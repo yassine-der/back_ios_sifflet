@@ -8,10 +8,10 @@ const ligueSchema = new mongoose.Schema({
     },*/
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
+        //required: true,
         ref: 'User'
     },
-    photo: {
+    image: {
         type:String,
         //required:true
     },
@@ -24,12 +24,15 @@ const ligueSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    liguecapacite:{
+    /*liguecapacite:{
         type: Number,
         required:true,
-    },
+    },*/
     equipes_ids: [{type: mongoose.Schema.Types.ObjectId,
         ref:'Equipe'}],
+
+    matchs_ids: [{type: mongoose.Schema.Types.ObjectId,
+        ref:'Match'}],
 },
 {
   timestamps :true

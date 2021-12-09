@@ -6,18 +6,22 @@ const stadeSchema = new mongoose.Schema({
         required: true,
         ref: 'User'
     },
-    /*photo: {
+    image: {
         type:String,
         required:true
-    },*/
+    },
     nom: {
         type:String,
         required:true
     },
-    address: {
-        type:String,
-        required:true
-    },
+    lat:{
+     type:String,
+    required:true
+     },
+    lon:{
+    type:String,
+    required:true
+},
     discription: {
         type:String,
         //required:true

@@ -19,21 +19,29 @@ const getStadeId = AsyncHandler(async(req,res) => {
     }
 })
 const addStade = AsyncHandler(async(req,res)=>{
-    const{nom,address,discription/*,payementMethods,taxPrice*/} = req.body
+    const{nom,lat,lon,discription/*,payementMethods,taxPrice*/} = req.body
 
+    const lonExist = await Stade.findOne({lon}) 
+    const latExist = await Stade.findOne({lat}) 
+
+    
+    if(lonExist && latExist ){
+        res.status(400)
+        throw new Error('stade Aleardy exists')
+    }
     const stade = await Stade.create({
-        photo: req.file.path,
+        image: req.file.path,
         nom,
+        lat,
+        lon,
         user:req.user._id,
-        address,
         discription,
         //payementMethods,
         //taxPrice
     }) 
     const createdStade = await stade.save()
     res.status(201).json({nom:createdStade.nom,
-        user:req.user._id,
-        address:createdStade.address,
+        //user:req.user._id,
         discription:createdStade.discription})
 })
 const updateStadeToPaid = AsyncHandler(async(req,res)=>{
@@ -96,4 +104,4 @@ const addLigueToStade= AsyncHandler(async(req,res)=>{
     }
 })
 
-module.exports= {getStade, getStadeId,addStade,updateStadeToPaid,getMystade,deleteStade}
+module.exports= {getStade, getStadeId,addStade,updateStadeToPaid,getMystade,deleteStade,addLigueToStade}
