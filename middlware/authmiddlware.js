@@ -34,6 +34,14 @@ const ProprietaireDeStade = (req,res,next) =>{
         throw new Error('not authorized as an ProprietaireDeStade')
     }
 }
+/*const ligue = (req,res,next) =>{
+    if(req.user ){
+        next()
+    } else {
+        res.status(401)
+        throw new Error('not authorized as an ligue')
+    }
+}*/
 /*const JoueurUser = (req,res,next) =>{
     if(req.user &&req.user.isJoueur){
         next()

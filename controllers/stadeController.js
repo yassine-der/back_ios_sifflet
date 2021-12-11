@@ -89,8 +89,12 @@ const addLigueToStade= AsyncHandler(async(req,res)=>{
     if(stade){
         stade.nom = stade.nom,
         stade.discription = stade.discription,
-        stade.address = stade.address,
-        stade.ligues_id.push(req.body.ligues_id)
+        stade.address = stade.address
+        if(stade.ligues_id.length = 0){
+            stade.ligues_id = req.body.ligues_id
+        }else{
+            stade.ligues_id.push(req.body.ligues_id)
+        }
 
         const updatestade = await stade.save()
 

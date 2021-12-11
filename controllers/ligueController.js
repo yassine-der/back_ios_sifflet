@@ -132,7 +132,7 @@ const creationDesMatch =AsyncHandler(async(req,res)=>{
         
 
     }
-    res.status(201).json({updateLigue});
+    res.status(201).json({ligue});
     return
 
         

@@ -165,6 +165,31 @@ const updateUser = AsyncHandler(async(req,res) => {
         throw new Error('user not found')
     }
 })
+const googleLogin =  AsyncHandler(async(req,res)=>{
+    const user= await User.findOne(req.body.email)
+    if(user){
+    res.json({
+        _id : user._id,
+        nom: user.nom,
+        prenom : user.prenom,
+        email: user.email,
+        isProprietaireDeStade : user.isProprietaireDeStade,
+        token: generateToken(user._id)
+
+    })
+}else{
+    
+   const user = await User.create({
+    photo:"",
+    nom:req.body.nom,
+    prenom:registerUser.body.prenom,
+    email:req.body.email,
+    motdepasse:req.body.motdepasse,
+    isProprietaireDestade:false,
+    token: generateToken(user._id)
+   })
+} 
+})
 
 module.exports ={authUser,
                  getuserProfile,
@@ -173,4 +198,5 @@ module.exports ={authUser,
                  ,getusers,
                  deleteUser,
                  getUserById,
-                 updateUser}
+                 updateUser,
+                 googleLogin}
