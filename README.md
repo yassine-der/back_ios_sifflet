@@ -8,17 +8,16 @@ A mobile application intended for everyone with the aim of making life easier fo
 ### Dependencies
 
 
-* nodemon "
-* bcryptjs": "^2.4.3"
-* body-parser": "^1.19.0"
-* dotenv": "^10.0.0",
-* express": "^4.17.1",
-* express-async-handler": "^1.2.0"
-* jsonwebtoken": "^8.5.1"
-* mongoose": "^6.0.14"
-* morgan": "^1.10.0"
-* multer": "^1.4.3"
-* nodemon": "^2.0.15"
+* bcryptjs: 2.4.3
+* body-parser: "^1.19.0
+* dotenv: 10.0.0
+* express: 4.17.1
+* express-async-handler: 1.2.0
+* jsonwebtoken: 8.5.1
+* mongoose: 6.0.14
+* morgan: 1.10.0
+* multer: 1.4.3
+* nodemon: 2.0.15
 ### Installing
 
 * Node js
