@@ -49,15 +49,17 @@ npm run dev
 Contributors names and contact info
 
 Yassine Derbel 
+Yassimn Yedas
 
 Email: yassine.derbel1@esprit.tn
+Email: yassmin.yedeas@esprit.tn
 
 
 ## Version History
 
 ## License
 
-This project is licensed under the [YASSINE DERBEL] License - see the LICENSE.md file for details
+This project is licensed under the [YASSINE DERBEL,YASSMIN YEDAS] License - see the LICENSE.md file for details
 
 ## Acknowledgments
 
