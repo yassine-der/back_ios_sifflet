@@ -34,7 +34,7 @@ A mobile application intended for everyone with the aim of making life easier fo
 * In the command promt tool type: code .
 * In vscode terminaltype the commands shown below
 ```
-npm i dotenv  express mongoose jsonwebtoken bcrypt nodemon 
+npm i dotenv  express mongoose jsonwebtoken bcrypt nodemon multer morgan body-parser express-async-handler
 ```
 * To run the server
 ```
