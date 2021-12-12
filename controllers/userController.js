@@ -60,7 +60,30 @@ const registerUser = AsyncHandler(async(req,res) => {
        motdepasse,
        isProprietaireDestade
 
-   })    
+   })
+   
+       //nodemailer 
+       let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: process.env.EMAIL,
+            pass: process.env.PASSWORD
+        }
+    });
+    let mailOptions = {
+        from: process.env.EMAIL,
+        to: user.email,
+        subject: 'confirmation account',
+        text: 'welcome to sifflet'
+    } 
+    transporter.sendMail(mailOptions, function(err, data) {
+        if (err) {
+            console.log('error Occurs');
+        }else {
+            console.log('email sent !');
+        }
+    });
+    
    if(user){
        res.status(201).json({ _id : user._id,
         nom: user.nom,
