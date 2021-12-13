@@ -1,6 +1,9 @@
 const AsyncHandler = require('express-async-handler')
 const Arbitre = require('../models/arbitre')
 
+
+
+
 const getArbitre = AsyncHandler(async(req,res) => {
 
     const arbitres = await Arbitre.find({})

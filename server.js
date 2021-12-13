@@ -17,7 +17,47 @@ const { protect } = require('./middlware/authmiddlware')
 
 
 
-//* swagger */
+
+
+dotenv.config()
+
+connectDB()
+
+const app = express()
+
+if(process.env.NODE_ENV === 'development'){
+    app.use(morgan('dev'))
+}
+
+app.use(express.json())
+
+
+
+
+app.get('/',(req,res) =>{
+    res.send('API is running...')
+})
+
+app.use('/joueur',joueurRouter)
+app.use('/user',userRouter)
+app.use('/equipe',equipeRouter)
+app.use('/ligue',ligueRouter)
+app.use('/arbitre',arbitreRouter)
+app.use('/match',matchRouter)
+app.use('/upload',uploadRouter)
+app.use('/stade',stadeRouter)
+
+//const __dirname = path.resolve()
+app.use('/uploads',express.static(path.join(__dirname)))
+
+
+
+
+
+const PORT = process.env.PORT || 3000
+
+
+//*************************   swag */
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
@@ -47,51 +87,16 @@ const swaggerUi = require('swagger-ui-express');
   
 };
 
-
-
-
-
-
-
-
-
-
-dotenv.config()
-
-connectDB()
-
-const app = express()
-
-if(process.env.NODE_ENV === 'development'){
-    app.use(morgan('dev'))
-}
-
-app.use(express.json())
-
-app.get('/',(req,res) =>{
-    res.send('API is running...')
-})
-
-app.use('/joueur',joueurRouter)
-app.use('/user',userRouter)
-app.use('/equipe',equipeRouter)
-app.use('/ligue',ligueRouter)
-app.use('/arbitre',arbitreRouter)
-app.use('/match',matchRouter)
-app.use('/upload',uploadRouter)
-app.use('/stade',stadeRouter)
-
-//const __dirname = path.resolve()
-app.use('/uploads',express.static(path.join(__dirname)))
+const options = {
+  swaggerDefinition,
+  // Paths to files containing OpenAPI definitions
+  apis: ['./routes/*.js'],
+};
+const swaggerSpec = swaggerJSDoc(options);
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(notFound)
 
 app.use(errorHandler)
-
-
-
-
-
-const PORT = process.env.PORT || 3000
 
 app.listen(PORT,console.log(`Server running in ${process.env.NODE_ENV} on port ${PORT}`)) 
