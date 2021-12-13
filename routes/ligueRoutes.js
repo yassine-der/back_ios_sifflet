@@ -30,6 +30,8 @@ router.route('/').get(getLigue).post(protect,ProprietaireDeStade,upload.single('
 //one
 router.route('/:id').get(getligueId).put(protect,ProprietaireDeStade,addEquipeToLique)
 router.route('/up/:id').put(protect,ProprietaireDeStade,creationDesMatch)
+//router.route('/ls/:id').get(findliguebystade).put(protect,ProprietaireDeStade,addLigueToStade)
+
 
 module.exports = router             
 

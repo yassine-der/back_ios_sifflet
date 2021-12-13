@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs')
 
 const userSchema = new mongoose.Schema({
    
-    photo: {
+    image: {
         type:String,
         required:true
     },
@@ -47,6 +47,8 @@ const userSchema = new mongoose.Schema({
           required: true,
           //default: false
       },
+      verifCode:{type:String},
+      isVerified:{type: Boolean}
 
 
       },

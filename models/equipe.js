@@ -11,7 +11,7 @@ const equipeSchema = new mongoose.Schema({
         required: true,
         ref: 'User'
     },
-    photo: {
+    image: {
         type:String,
     },
     nom: {
@@ -22,10 +22,10 @@ const equipeSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    equipecapacite: {
+    /*equipecapacite: {
         type:String,
         require:true
-    },
+    },*/
     joueurs_id: [{
         type: mongoose.Schema.Types.ObjectId,
         ref:'Joueur'

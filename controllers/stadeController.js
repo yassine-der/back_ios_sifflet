@@ -1,6 +1,10 @@
 const AsyncHandler = require('express-async-handler')
 const Ligue = require('../models/ligue')
 const Stade = require('../models/stade')
+const mongoose= require('mongoose')
+
+const { getLigue,getligueId,addLigue, addEquipeToLique,creationDesMatch } = require('../controllers/ligueController')
+
 
 const getStade = AsyncHandler(async(req,res) => {
 
@@ -10,7 +14,7 @@ const getStade = AsyncHandler(async(req,res) => {
 })
 
 const getStadeId = AsyncHandler(async(req,res) => {
-     const stade =await Stade.findById(req.params.id).populate('user','nom','email')
+     const stade =await Stade.findById(req.params.id).populate('ligues_id')
     if(stade){
         res.json(stade)
     }else{
@@ -71,6 +75,36 @@ const getMystade = AsyncHandler(async(req,res)=>{
     res.json(my)
 })
 
+const getligueOfStade =  AsyncHandler(async(req,res)=>{
+    const stade  = await Stade.findById(req.params.id)
+    //stade.ligues_id.forEach(getligueId)
+    if(stade){
+       // for (const lid in stade.ligues_id) {
+            for (var lid in stade.ligues_id) {
+                
+                //var li = mongoose.Types.ObjectId(lid)
+                //console.log(li)
+
+                const ligue =await Ligue.findById(lid)
+            if(ligue){
+
+                console.log('wlh chay')
+                res.json(ligue)
+            }else{
+                res.status(404)
+                throw new Error('ligue not found')
+            }
+        }
+        
+    }else{
+        res.status(404)
+        throw new Error('stade not found')
+    }
+    //res.status(404).json("Not found");
+    //return
+
+})
+
 const deleteStade = AsyncHandler(async(req,res)=>{
     const stade = await Stade.findById(req.params.id)
     if(stade){
@@ -90,13 +124,14 @@ const addLigueToStade= AsyncHandler(async(req,res)=>{
         stade.nom = stade.nom,
         stade.discription = stade.discription,
         stade.address = stade.address
-        if(stade.ligues_id.length = 0){
+        if(stade.ligues_id.length == 0){
             stade.ligues_id = req.body.ligues_id
         }else{
             stade.ligues_id.push(req.body.ligues_id)
         }
 
         const updatestade = await stade.save()
+
 
         res.status(201).json({ updatestade })
        
@@ -108,4 +143,4 @@ const addLigueToStade= AsyncHandler(async(req,res)=>{
     }
 })
 
-module.exports= {getStade, getStadeId,addStade,updateStadeToPaid,getMystade,deleteStade,addLigueToStade}
+module.exports= {getStade, getStadeId,addStade,updateStadeToPaid,getMystade,deleteStade,addLigueToStade,getligueOfStade}

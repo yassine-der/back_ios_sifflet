@@ -30,6 +30,10 @@ const stadeSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref:'Ligue'
       }],
+      /*
+       ligues_id: [{
+        type:String
+      }],*/
     payementMethods:{
         type:String,
         //required: true

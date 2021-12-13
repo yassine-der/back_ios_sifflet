@@ -11,6 +11,13 @@ const ligueSchema = new mongoose.Schema({
         //required: true,
         ref: 'User'
     },
+    /*
+    stade: {
+        type: mongoose.Schema.Types.ObjectId,
+        //required: true,
+        ref: 'Stade'
+    },
+    */
     image: {
         type:String,
         //required:true

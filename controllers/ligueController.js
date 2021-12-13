@@ -2,6 +2,7 @@ const AsyncHandler = require('express-async-handler')
 const Ligue = require('../models/ligue')
 const Equipe = require('../models/equipe')
 const Match = require('../models/match')
+const stade = require('../models/stade')
 
 const getLigue = AsyncHandler(async(req,res) => {
 
@@ -97,6 +98,37 @@ const addEquipeToLigue = AsyncHandler(async(req,res)=>{
         throw new Error('ligue not found')
     }
 })
+/*
+const addLigueToStade = AsyncHandler(async(req,res)=>{
+    const ligue = await Ligue.findById(req.params.id)
+
+    if(ligue){
+        ligue.nom = ligue.nom,
+        ligue.discription = ligue.discription,
+        //equipe.equipecapacite = equipe.equipecapacite,
+        //ligue.joueurs_id.push(req.body.equipes_ids)
+        //ligue.matchs_ids = ligue.matchs_ids
+        ligue.stade = req.body.stade
+        
+       
+
+        const updateLigue = await ligue.save()
+
+        res.status(201).json({ updateLigue })
+       
+
+        
+    } else{
+        res.status(404)
+        throw new Error('ligue not found')
+    }
+})
+ const findliguebystade=AsyncHandler(async(req,res)=>{
+    const my  =await Ligue.find({stade:req.body.stade._id})
+    res.json(my)
+
+ })
+ */
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -104,7 +136,7 @@ function getRandomInt(min, max) {
   }
 const creationDesMatch =AsyncHandler(async(req,res)=>{
     const ligue = await Ligue.findById(req.params.id)
-    if(ligue.equipes_ids.length = 10){
+    if(ligue.equipes_ids.length === 10){
     //for(var i = 0; i < 10; i++){
         for(var j = 0;j< 45;j++){
             //do{
