@@ -67,7 +67,18 @@ router.route('/profile')
       .get(protect,getuserProfile)
       .put(protect,updateUserProfile)
 
+/** 
+* @swagger
 
+* /:id :
+*   description: used to update user
+*   put:
+*   responses:
+*     '200':
+*        description: user updated
+*     '500' :
+*        description: error update
+*/
 router.route('/:id').delete(protect,ProprietaireDeStade,deleteUser)
                   .get(protect,ProprietaireDeStade,getUserById)
                   .put(protect,ProprietaireDeStade,updateUser)
