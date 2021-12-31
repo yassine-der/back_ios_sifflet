@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
    
     image: {
         type:String,
-        required:true
+        //required:true
     },
 
     nom: {
@@ -35,19 +35,13 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    /*arbitres: [{
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Arbitre'
-      }],
-      token:{
-          type : String
-      }*/
+
       isProprietaireDestade:{
-          type: Boolean,
+          type: String,
           required: true,
           //default: false
       },
-      verifCode:{type:String},
+      verifCode:{type:Number},
       isVerified:{type: Boolean}
 
 
@@ -69,4 +63,4 @@ const userSchema = new mongoose.Schema({
       })
 
 const User = mongoose.model('User',userSchema)
-module.exports = User             
+module.exports = User

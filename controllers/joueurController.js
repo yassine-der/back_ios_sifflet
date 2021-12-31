@@ -8,10 +8,10 @@ const getJoueur = AsyncHandler(async(req,res) => {
     res.json(joueurs)
 })
 
-const getJoueuryId = AsyncHandler(async(req,res) => {
+const getJoueuryId = (async(req,res) => {
      const joueur =await Joueur.findById(req.params.id)
     if(joueur){
-        res.json(joueur)
+        res.status(200).json({joueur})
     }else{
         res.status(404)
         throw new Error('Joueur not found')
@@ -19,7 +19,7 @@ const getJoueuryId = AsyncHandler(async(req,res) => {
 })
 
 const addJoueur = AsyncHandler(async(req,res)=>{
-    const{nom,age, taille,longueur,num,discription} = req.body
+    const{nom,prenom,age, taille,longueur,num,discription} = req.body
 
     const joueurExist = await Joueur.findOne({nom}) 
 
@@ -29,8 +29,10 @@ const addJoueur = AsyncHandler(async(req,res)=>{
     }
 
 
-    const joueur = await Joueur.create({
+    const joueur = new Joueur({
+        image: req.file.path,
         nom,
+        prenom,
         user:req.user._id,
         age,
         taille,
@@ -39,13 +41,7 @@ const addJoueur = AsyncHandler(async(req,res)=>{
         discription,
     }) 
     const createJoueur = await joueur.save()
-    res.status(201).json({nom:createJoueur.nom,
-        user:req.user._id,
-        age:createJoueur.age,
-        taille:createJoueur.taille,
-        longueur:createJoueur.longueur,
-        num:createJoueur.num,
-        discription:createJoueur.discription})
+    res.status(201).json({createJoueur})
 })
 const deleteJoueur = AsyncHandler(async(req,res)=>{
     const joueur = await Joueur.findById(req.params.id)

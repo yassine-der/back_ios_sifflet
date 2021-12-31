@@ -22,9 +22,11 @@ const storage = multer.diskStorage({
   const upload = multer({storage: storage,fileFilter: fileFilter
       }) 
 
-const { getArbitre,getArbitreId } = require('../controllers/arbitreController')
+const { getArbitre,getArbitreId,addArbitre} = require('../controllers/arbitreController')
+const {protect,ProprietaireDeStade} = require('../middlware/authmiddlware')
+
 //all
-router.route('/').get(getArbitre)
+router.route('/').get(getArbitre).post(upload.single('image'),protect,ProprietaireDeStade,addArbitre)
 //one
 router.route('/:id').get(getArbitreId)
 

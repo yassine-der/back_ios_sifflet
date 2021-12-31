@@ -12,7 +12,7 @@ const arbitreSchema = new mongoose.Schema({
     },
     photo: {
         type:String,
-        //required:true
+        required:true
     },
     nom: {
         type:String,

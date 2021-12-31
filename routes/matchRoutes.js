@@ -1,12 +1,15 @@
 const express = require('express')
 const router = express.Router() 
 
-const { getMatch,getMatchId, addMatch } = require('../controllers/matchController')
+const { getMatch,getMatchId, addMatch,donnerDesPoint ,updateScore} = require('../controllers/matchController')
 const { protect, ProprietaireDeStade } = require('../middlware/authmiddlware')
 //all
-router.route('/').get(protect,getMatch).post(protect,ProprietaireDeStade,addMatch)
+router.route('/').get(protect,getMatch).post(protect,addMatch)
 //one
-router.route('/:id').get(protect,getMatchId)
+router.route('/up').put(protect,donnerDesPoint)
 
-module.exports = router             
+router.route('/:id').get(protect,getMatchId).put(protect,updateScore)
 
+
+module.exports = router
+             

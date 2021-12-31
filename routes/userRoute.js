@@ -29,10 +29,11 @@ router.post('/login',authUser)
 router.route('/profile')
       .get(protect,getuserProfile)
       .put(protect,updateUserProfile)
-router.route('/:id').delete(protect,ProprietaireDeStade,deleteUser)
-                  .get(protect,ProprietaireDeStade,getUserById)
+router.route('/:id').delete(protect,deleteUser)
+                  .get(protect,getUserById)
                   .put(updateUser)
 router.route('/google').post(googleLogin)
-router.route('/verifEmail/:id').put(verifEmail)
- 
+router.route('/verifEmail/:id').patch(verifEmail)
+
+
 module.exports = router              

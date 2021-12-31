@@ -24,16 +24,16 @@ const stadeSchema = new mongoose.Schema({
 },
     discription: {
         type:String,
-        //required:true
+        required:true
     },
     ligues_id: [{
         type: mongoose.Schema.Types.ObjectId,
         ref:'Ligue'
       }],
-      /*
-       ligues_id: [{
-        type:String
-      }],*/
+      num: {
+        type:String,
+        //required:true
+    },
     payementMethods:{
         type:String,
         //required: true

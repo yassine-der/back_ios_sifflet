@@ -22,15 +22,24 @@ const storage = multer.diskStorage({
   const upload = multer({storage: storage,fileFilter: fileFilter
       })
 
-const { getLigue,getligueId,addLigue, addEquipeToLique,creationDesMatch } = require('../controllers/ligueController')
+const { getLigue,getligueId,addLigue,addEquipeToLigue,creationDesMatch,getMyligue,getMatchesA,getMatchesB,classement,triClassement} = require('../controllers/ligueController')
 const {protect,ProprietaireDeStade} = require('../middlware/authmiddlware')
 
 //all
 router.route('/').get(getLigue).post(protect,ProprietaireDeStade,upload.single('image'),addLigue)
+router.route('/:id').put(protect,ProprietaireDeStade,addEquipeToLigue)
+
+router.route('/my').get(protect,getMyligue)
 //one
-router.route('/:id').get(getligueId).put(protect,ProprietaireDeStade,addEquipeToLique)
-router.route('/up/:id').put(protect,ProprietaireDeStade,creationDesMatch)
-//router.route('/ls/:id').get(findliguebystade).put(protect,ProprietaireDeStade,addLigueToStade)
+router.route('/classement').put(protect,classement)
+
+router.route('/:id').get(getligueId)
+router.route('/up/:id').put(protect,creationDesMatch)
+router.route('/Als/:id').get(protect,getMatchesA)
+router.route('/Bls/:id').get(protect,getMatchesB)
+
+router.route('/tri/:id').get(protect,triClassement)
+
 
 
 module.exports = router             

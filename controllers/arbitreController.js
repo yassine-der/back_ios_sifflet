@@ -20,8 +20,8 @@ const getArbitreId = AsyncHandler(async(req,res) => {
 const addArbitre = AsyncHandler(async(req,res)=>{
     const{nom,age, num,discription} = req.body
 
-    const nomExist = await Stade.findOne({nom}) 
-    const numExist = await Stade.findOne({num}) 
+    const nomExist = await Arbitre.findOne({nom}) 
+    const numExist = await Arbitre.findOne({num}) 
 
     
     if(nomExist && numExist ){
@@ -30,6 +30,7 @@ const addArbitre = AsyncHandler(async(req,res)=>{
     }
 
     const arbitre = new Arbitre({
+        photo: req.file.path,
         nom,
         user:req.user._id,
         age,
@@ -54,4 +55,4 @@ const deleteArbitre = AsyncHandler(async(req,res)=>{
 
 })
 
-module.exports= {getArbitre, getArbitreId,addArbitre,deleteArbitre}
+module.exports= {getArbitre, getArbitreId,addArbitre,deleteArbitre,addArbitre}

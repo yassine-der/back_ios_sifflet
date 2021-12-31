@@ -2,26 +2,29 @@ const AsyncHandler = require('express-async-handler')
 const User = require('../models/user')
 const {generateToken} = require('../utils/genreateToken')
 const nodemailer = require('nodemailer')
+const jwt = require('jsonwebtoken')
+
 
 const authUser = AsyncHandler(async(req,res) => {
     const{email,motdepasse} =req.body
 
     const user = await User.findOne({email})
     
-    if(user && (await user.matchPassword(motdepasse)) ){//&& user.isVerified == true){
-        res.json({
-            _id : user._id,
-            nom: user.nom,
-            prenom : user.prenom,
-            email: user.email,
-            isProprietaireDeStade : user.isProprietaireDeStade,
-            token: generateToken(user._id)
+    if(user && (await user.matchPassword(motdepasse))){
+        res.status(200).json({
+             _id : user._id,
+             nom: user.nom,
+             prenom : user.prenom,
+             email: user.email,
+             isProprietaireDestade : user.isProprietaireDestade,
+             token: generateToken(user._id)
+            //user, "token" : jwt.sign({id:req.user}, process.env.JWT_SECRET,{expiresIn: '30d'})
 
 
         })
     }else{
         res.status(401)
-        throw new Error('email ou mot de passe n est pas valide ou compte non valide')
+        throw new Error('email ou mot de passe n est pas valide')
 
 } 
 })   
@@ -30,12 +33,7 @@ const getuserProfile = AsyncHandler(async(req,res) => {
 
     if(user){
         res.json({
-            photo: user.photo,
-            _id : user._id,
-            nom: user.nom,
-            prenom : user.prenom,
-            email: user.email,
-            isProprietaireDeStade : user.isProprietaireDeStade,
+           user
             //token: generateToken(user._id)
 
 
@@ -45,6 +43,7 @@ const getuserProfile = AsyncHandler(async(req,res) => {
         throw new Error('user not found')
     }
 })
+
 const transporter = nodemailer.createTransport({
 
     service : 'gmail',
@@ -84,12 +83,12 @@ const registerUser = AsyncHandler(async(req,res) => {
    
    if(user){
        res.status(201).json({
-           photo:user.phot,
+           image:user.image,
             _id : user._id,
         nom: user.nom,
         prenom : user.prenom,
         email: user.email,
-        isProprietaireDeStade : user.isProprietaireDeStade,
+        isProprietaireDestade : user.isProprietaireDestade,
         photo: user.photo,
 
         //token: generateToken(user._id)
@@ -150,7 +149,6 @@ const verifEmail = AsyncHandler(async(req, res)=>{
       
     }
   })
-
 const updateUserProfile = AsyncHandler(async(req,res) => {
     const user= await User.findById(req.user._id)
 
@@ -169,7 +167,7 @@ const updateUserProfile = AsyncHandler(async(req,res) => {
             nom: updateUser.nom,
             prenom : updateUser.prenom,
             email: updateUser.email,
-            isProprietaireDeStade : updateUser.isProprietaireDeStade,
+            isProprietaireDestade : updateUser.isProprietaireDestade,
             //token: generateToken(updateUser._id)
 
 
@@ -197,7 +195,7 @@ const deleteUser = AsyncHandler(async(req,res)=>{
 
 })
 const getUserById = AsyncHandler(async(req,res)=>{
-    const user = await User.findById(req.params.id).select('-motdepasse')
+    const user = await User.findById(req.params.id)//.select('-motdepasse')
 
     if(user){
         res.json(user)
@@ -214,7 +212,7 @@ const updateUser = AsyncHandler(async(req,res) => {
         user.nom = req.body.nom || user.nom
         user.prenom = req.body.prenom || user.prenom
         user.email = req.body.email || user.email
-        user.isProprietaireDeStade = req.body.isProprietaireDeStade
+        user.isProprietaireDestade = req.body.isProprietaireDestade
         if(req.body.motdepasse){
             user.motdepasse = req.body.motdepasse
         }
@@ -226,7 +224,7 @@ const updateUser = AsyncHandler(async(req,res) => {
             nom: updateUser.nom,
             prenom : updateUser.prenom,
             email: updateUser.email,
-            isProprietaireDeStade : updateUser.isProprietaireDeStade,
+            isProprietaireDestade : updateUser.isProprietaireDestade,
 
 
         })
@@ -235,31 +233,49 @@ const updateUser = AsyncHandler(async(req,res) => {
         throw new Error('user not found')
     }
 })
-const   googleLogin =  AsyncHandler(async(req,res)=>{
-    const user= await User.findOne(req.body.email)
-    if(user){
-    res.json({
-        _id : user._id,
-        nom: user.nom,
-        prenom : user.prenom,
-        email: user.email,
-        isProprietaireDeStade : user.isProprietaireDeStade,
-        token: generateToken(user._id)
 
-    })
-}else{
+    const googleLogin =  AsyncHandler(async(req,res)=>{
+        const user = await User.findOne({email : req.body.email})
+        if(user){
+        res.json({
+            _id : user._id,
+            nom: user.nom,
+            prenom : user.prenom,
+            email: user.email,
+            isProprietaireDeStade : user.isProprietaireDestade,
+            token: generateToken(user._id)
     
-   const user = await User.create({
-    photo:"",
-    nom:req.body.nom,
-    prenom:registerUser.body.prenom,
-    email:req.body.email,
-    motdepasse:req.body.motdepasse,
-    isProprietaireDestade:false,
-    token: generateToken(user._id)
-   })
-} 
-})
+        })
+    }else{
+        
+        const user = await User.create({
+        image:"",
+        nom:req.body.nom,
+        prenom:req.body.prenom,
+        email:req.body.email,
+        motdepasse:req.body.motdepasse,
+        isProprietaireDestade:"ProprietaireDestade",
+        //token: generateToken(user._id)
+       })
+       if(user){
+        res.status(201).json({
+            image:user.image,
+             _id : user._id,
+         nom: user.nom,
+         prenom : user.prenom,
+         email: user.email,
+         isProprietaireDestade : user.isProprietaireDestade,
+         image: user.image,
+ 
+         //token: generateToken(user._id)
+     })
+    } else{
+        res.status(400)
+        throw  new Error('invalid user data')
+    }
+}
+    })
+
 
 module.exports ={authUser,
                  getuserProfile,
@@ -268,6 +284,4 @@ module.exports ={authUser,
                  ,getusers,
                  deleteUser,
                  getUserById,
-                 updateUser,
-                 googleLogin,
-                 verifEmail}
+                 updateUser,googleLogin,verifEmail}

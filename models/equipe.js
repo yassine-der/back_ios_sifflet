@@ -2,10 +2,7 @@ const mongoose= require('mongoose')
 const joueur = require('./joueur')
 
 const equipeSchema = new mongoose.Schema({
-   /* id: {
-        type: Number,
-        required : true
-    },*/
+   
     user: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
@@ -13,6 +10,8 @@ const equipeSchema = new mongoose.Schema({
     },
     image: {
         type:String,
+        required:true
+
     },
     nom: {
         type:String,
@@ -22,10 +21,7 @@ const equipeSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    /*equipecapacite: {
-        type:String,
-        require:true
-    },*/
+    
     joueurs_id: [{
         type: mongoose.Schema.Types.ObjectId,
         ref:'Joueur'
@@ -46,6 +42,8 @@ const equipeSchema = new mongoose.Schema({
         type:Number,
         required:true
     },
+    score:{type:Number},
+    nbJ:{type:Number}
     
 },
 {

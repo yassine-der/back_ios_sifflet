@@ -26,8 +26,11 @@ const { getJoueur,getJoueuryId,addJoueur, getMyJoueur} = require('../controllers
 const {protect,ProprietaireDeStade} = require('../middlware/authmiddlware')
 
 //all
-router.route('/').get(getJoueur).post(protect,upload.single('photo'),addJoueur)
+router.route('/').post(protect,upload.single('image'),addJoueur)
 router.route('/my').get(protect,getMyJoueur)
+
+router.route('/').get(protect,getJoueur)
+router.route('/:id').get(protect,getJoueuryId)
 
 //one
 router.route('/:id').get(getJoueuryId,protect)
