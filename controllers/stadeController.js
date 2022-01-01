@@ -38,7 +38,8 @@ const addStade = AsyncHandler(async(req,res)=>{
             lon,
             user:req.user._id,
             discription,
-            num
+            num,
+            isPaid:true,
             //ligues_id:[],
             //matches_ids:[]
             //payementMethods,
@@ -46,6 +47,23 @@ const addStade = AsyncHandler(async(req,res)=>{
         }) 
         const createdStade = await stade.save()
         res.status(201).json({createdStade})
+    }
+    
+})
+const check = (async(req,res)=>{
+    const{nom,lat,lon,discription/*,payementMethods,taxPrice*/,num} = req.body
+
+    const lonExist = await Stade.findOne({lon}) 
+    const latExist = await Stade.findOne({lat}) 
+
+    
+    if(lonExist && latExist ){
+        console.log('laaaaaaaaa')
+        res.status(304).json('stade existe')
+        return
+        }else{
+        res.json('bien')
+        return
     }
     
 })
@@ -196,4 +214,4 @@ const addLigueToStade= AsyncHandler(async(req,res)=>{
         throw new Error('stade not found')
     }
 })
-module.exports= {getStade, getStadeId,addStade,updateStadeToPaid,getMystade,deleteStade,addLigueToStade}
+module.exports= {getStade, getStadeId,addStade,updateStadeToPaid,getMystade,deleteStade,addLigueToStade,check}

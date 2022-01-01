@@ -165,7 +165,7 @@ const getMyligue = AsyncHandler(async(req,res)=>{
 const addEquipeToLigue= AsyncHandler(async(req,res)=>{
     const ligue = await Ligue.findById(req.params.id)
 
-    if(ligue && ligue.equipes_ids.length < 11){
+    if(ligue && ligue.equipes_ids.length < 10){
         ligue.nom = ligue.nom,
         ligue.discription = ligue.discription
         if(ligue.equipes_ids.includes(req.body.equipes_ids)){
@@ -227,8 +227,8 @@ const creationDesMatch =AsyncHandler(async(req,res)=>{
     //for(var i = 0; i < 10; i++){
        // for(var j = 0;j< 45;j++){
             do{
-        var a = getRandomInt(0,9)
-        var b = getRandomInt(0,9) 
+        var a = getRandomInt(0,10)
+        var b = getRandomInt(0,10) 
         if(a != b){
             if(ligue.equipe_A_id.length == 0 && ligue.equipe_B_id.length == 0 ){
                 ligue.equipe_A_id = ligue.equipes_ids[a]
