@@ -22,7 +22,7 @@ const storage = multer.diskStorage({
   const upload = multer({storage: storage,fileFilter: fileFilter
       })
 
-const { getLigue,getligueId,addLigue,addEquipeToLigue,creationDesMatch,getMyligue,getMatchesA,getMatchesB,classement,triClassement} = require('../controllers/ligueController')
+const { getLigue,getligueId,addLigue,addEquipeToLigue,creationDesMatch,getMyligue,getMatchesA,getMatchesB,classement,triClassement,deleteLigue} = require('../controllers/ligueController')
 const {protect,ProprietaireDeStade} = require('../middlware/authmiddlware')
 
 //all
@@ -39,6 +39,7 @@ router.route('/Als/:id').get(protect,getMatchesA)
 router.route('/Bls/:id').get(protect,getMatchesB)
 
 router.route('/tri/:id').get(protect,triClassement)
+router.route('/deleteligue/:id').delete(protect,deleteLigue)
 
 
 

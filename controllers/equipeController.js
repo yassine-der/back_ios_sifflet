@@ -58,8 +58,10 @@ const addEquipe = AsyncHandler(async(req,res)=>{
         point:0,
         win: 0,
         lose: 0, 
-        null: 0 ,       
+        null: 0 ,
     }) 
+    equipe.nbJ =equipe.joueurs_id.length       
+
     const createEquipe = await equipe.save()
     res.status(201).json({createEquipe})
 })     
@@ -86,9 +88,12 @@ const addJoueurToEquipe = AsyncHandler(async(req,res)=>{
            // res.status(404).json('existe deja')
          }else if(equipe.joueurs_id.length == 0 ){
             equipe.joueurs_id = req.body.joueurs_id
+
         }else{
             equipe.joueurs_id.push(req.body.joueurs_id)
+
         }
+        equipe.nbJ = equipe.joueurs_id.length       
         const updateequipe = await equipe.save()
 
         res.status(201).json({ updateequipe })

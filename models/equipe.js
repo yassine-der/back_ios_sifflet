@@ -43,7 +43,9 @@ const equipeSchema = new mongoose.Schema({
         required:true
     },
     score:{type:Number},
-    nbJ:{type:Number}
+    nbJ:{type:Number},
+    appar:{type:Boolean}
+    
     
 },
 {

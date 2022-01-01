@@ -74,55 +74,98 @@ const addLigue = AsyncHandler(async(req,res)=>{
         user:req.user._id,
         discription,
         equipes_ids,
-        matchs_ids,
-        
     }) 
+    ligue.nbE = ligue.equipes_ids.length      
+
     const createLigue = await ligue.save()
     res.status(201).json({createLigue})
 })
+// const deleteLigue = AsyncHandler(async(req,res)=>{
+//     const ligue = await Ligue.findById(req.params.id)
+//     if(ligue){
+//         await ligue.remove()
+//         res.json({message:'ligue removed'})
+
+//     }else{
+//         res.status(404)
+//         throw new Error('ligue not found')
+//     }
+
+// })
 const deleteLigue = AsyncHandler(async(req,res)=>{
     const ligue = await Ligue.findById(req.params.id)
+    
     if(ligue){
+        for (let i = 0; i < ligue.equipes_ids.length; i++) {
+            const equipeA = await Equipe.findById(ligue.equipes_ids[i])
+            console.log(ligue.equipes_ids[i])
+            if(equipeA){
+                equipeA.point = 0
+                equipeA.win = 0
+                equipeA.null = 0
+                equipeA.lose = 0
+                equipeA.appar = false
+                
+                
+                const equipea = await equipeA.save()
+        
+            }else{
+                res.status(404)
+                throw new Error('equipe not found')
+            }
+        
+        }
         await ligue.remove()
-        res.json({message:'ligue removed'})
+        res.status(200).json({message:'ligue removed'})
+        return
 
     }else{
         res.status(404)
         throw new Error('ligue not found')
     }
-
+//addLigue1
 })
-/*
-const addEquipeToLigue = AsyncHandler(async(req,res)=>{
-    const ligue = await Ligue.findById(req.params.id)
 
-    if(equipe){
-        ligue.nom = ligue.nom,
-        ligue.discription = ligue.discription,
-        //equipe.equipecapacite = equipe.equipecapacite,
-        ligue.equipes_ids.push(req.body.equipes_ids)
-        ligue.matchs_ids = ligue.matchs_ids
-       
-
-        const updateLigue = await ligue.save()
-
-        res.status(201).json({ updateLigue })
-       
-
-        
-    } else{
-        res.status(404)
-        throw new Error('ligue not found')
-    }
-})*/
 const getMyligue = AsyncHandler(async(req,res)=>{
     const my  =await Ligue.find({user:req.user._id})
     res.json(my)
 })
+// const addEquipeToLigue= AsyncHandler(async(req,res)=>{
+//     const ligue = await Ligue.findById(req.params.id)
+
+//     if(ligue){
+//         ligue.nom = ligue.nom,
+//         ligue.discription = ligue.discription
+//         if(ligue.equipes_ids.includes(req.body.equipes_ids)){
+//             // stade.ligues_id = req.body.ligues_id
+//             console.log("existe deja")
+//             res.status(404)
+//             throw new Error('impossible equipe existe deja  ')
+
+//            // res.status(404).json('existe deja')
+//          }else if(ligue.equipes_ids.length == 0 ){
+//             ligue.equipes_ids = req.body.equipes_ids
+//         }else{
+//             ligue.equipes_ids.push(req.body.equipes_ids)
+//         }
+//         ligue.matchs_ids = ligue.matchs_ids;
+        
+//         const updatelique = await ligue.save()
+
+
+//         res.status(201).json(updatelique)
+       
+
+        
+//     } else{
+//         res.status(404)
+//         throw new Error('ligue not found')
+//     }
+// })
 const addEquipeToLigue= AsyncHandler(async(req,res)=>{
     const ligue = await Ligue.findById(req.params.id)
 
-    if(ligue){
+    if(ligue && ligue.equipes_ids.length < 11){
         ligue.nom = ligue.nom,
         ligue.discription = ligue.discription
         if(ligue.equipes_ids.includes(req.body.equipes_ids)){
@@ -133,12 +176,31 @@ const addEquipeToLigue= AsyncHandler(async(req,res)=>{
 
            // res.status(404).json('existe deja')
          }else if(ligue.equipes_ids.length == 0 ){
-            ligue.equipes_ids = req.body.equipes_ids
+            const equipeA = await Equipe.findById(req.body.equipes_ids)
+            if(equipeA && equipeA.appar != true){
+                equipeA.appar = true
+                ligue.equipes_ids = req.body.equipes_ids
+      
+
+                const equipea = await equipeA.save()
+            }else{
+                res.status(404)
+                throw new Error('equipe not found')
+            }
+
         }else{
-            ligue.equipes_ids.push(req.body.equipes_ids)
+            const equipeA = await Equipe.findById(req.body.equipes_ids)
+            if(equipeA && equipeA.appar != true){
+                equipeA.appar = true
+                ligue.equipes_ids.push(req.body.equipes_ids)
+                const equipea = await equipeA.save()
+            }else{
+                res.status(404)
+                throw new Error('equipe not found')
+            }
         }
-        ligue.matchs_ids = ligue.matchs_ids;
-        
+        ligue.nbE = ligue.equipes_ids.length 
+
         const updatelique = await ligue.save()
 
 
@@ -151,6 +213,7 @@ const addEquipeToLigue= AsyncHandler(async(req,res)=>{
         throw new Error('ligue not found')
     }
 })
+
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
