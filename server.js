@@ -4,6 +4,8 @@ const connectDB = require('./config/db')
 const {notFound,errorHandler} = require('./middlware/errorMiddlware')
 const path = require('path')
 const morgan = require('morgan')
+const swaggerUI = require("swagger-ui-express");
+const swaggerJsDoc = require("swagger-jsdoc");
 
 const joueurRouter = require('./routes/joueurRoutes')
 const userRouter = require('./routes/userRoute')
@@ -29,7 +31,34 @@ if(process.env.NODE_ENV === 'development'){
     app.use(morgan('dev'))
 }
 
+
+
+const options = {
+	definition: {
+		openapi: "3.0.0",
+		info: {
+			title: "Library API",
+			version: "1.0.0",
+			description: "A simple Express Library API",
+		},
+		servers: [
+			{
+				url: "http://localhost:4000",
+			},
+		],
+	},
+	apis: ["./routes/*.js"],
+};
+
+const specs = swaggerJsDoc(options);
+
+
+
+
 app.use(express.json())
+
+
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 
 
 
@@ -54,46 +83,7 @@ app.use('/uploads',express.static(path.join(__dirname)))
 
 
 
-const PORT = process.env.PORT || 3000
-
-
-//*************************   swag */
-const swaggerJSDoc = require('swagger-jsdoc');
-const swaggerUi = require('swagger-ui-express');
-
-
- swaggerDefinition = {
-  openapi: '3.0.0',
-  info: {
-    title: 'Express API for JSONPlaceholder',
-    version: '1.0.0',
-    description:
-      'This is a REST API application made with Express. It retrieves data from JSONPlaceholder.',
-    license: {
-      name: 'Licensed Under MIT',
-      url: 'https://spdx.org/licenses/MIT.html',
-    },
-    contact: {
-      name: 'JSONPlaceholder',
-      url: 'https://jsonplaceholder.typicode.com',
-    },
-  },
-  servers: [
-    {
-      url: 'http://localhost:3000',
-      description: 'Development server',
-    },
-  ],
-  
-};
-
-const options = {
-  swaggerDefinition,
-  // Paths to files containing OpenAPI definitions
-  apis: ['./routes/*.js'],
-};
-const swaggerSpec = swaggerJSDoc(options);
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+const PORT = process.env.PORT || 3000;
 
 app.use(notFound)
 
