@@ -130,42 +130,10 @@ const getMyligue = AsyncHandler(async(req,res)=>{
     const my  =await Ligue.find({user:req.user._id})
     res.json(my)
 })
-// const addEquipeToLigue= AsyncHandler(async(req,res)=>{
-//     const ligue = await Ligue.findById(req.params.id)
-
-//     if(ligue){
-//         ligue.nom = ligue.nom,
-//         ligue.discription = ligue.discription
-//         if(ligue.equipes_ids.includes(req.body.equipes_ids)){
-//             // stade.ligues_id = req.body.ligues_id
-//             console.log("existe deja")
-//             res.status(404)
-//             throw new Error('impossible equipe existe deja  ')
-
-//            // res.status(404).json('existe deja')
-//          }else if(ligue.equipes_ids.length == 0 ){
-//             ligue.equipes_ids = req.body.equipes_ids
-//         }else{
-//             ligue.equipes_ids.push(req.body.equipes_ids)
-//         }
-//         ligue.matchs_ids = ligue.matchs_ids;
-        
-//         const updatelique = await ligue.save()
-
-
-//         res.status(201).json(updatelique)
-       
-
-        
-//     } else{
-//         res.status(404)
-//         throw new Error('ligue not found')
-//     }
-// })
 const addEquipeToLigue= AsyncHandler(async(req,res)=>{
     const ligue = await Ligue.findById(req.params.id)
 
-    if(ligue && ligue.equipes_ids.length < 10){
+    if(ligue && ligue.equipes_ids.length < 11){
         ligue.nom = ligue.nom,
         ligue.discription = ligue.discription
         if(ligue.equipes_ids.includes(req.body.equipes_ids)){
