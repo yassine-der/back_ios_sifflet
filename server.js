@@ -4,6 +4,8 @@ const connectDB = require('./config/db')
 const {notFound,errorHandler} = require('./middlware/errorMiddlware')
 const path = require('path')
 var bodyParser = require('body-parser')
+const swaggerUI = require("swagger-ui-express");
+const swaggerJsDoc = require("swagger-jsdoc");
 
 const morgan = require('morgan')
 
@@ -11,7 +13,6 @@ const joueurRouter = require('./routes/joueurRoutes')
 const userRouter = require('./routes/userRoute')
 const equipeRouter = require('./routes/equipeRoutes')
 const ligueRouter = require('./routes/ligueRoutes')
-const arbitreRouter = require('./routes/arbitreRoutes')
 const matchRouter = require('./routes/matchRoutes')
 const uploadRouter = require('./routes/uploadsRoutes')
 const stadeRouter = require('./routes/stadeRoutes')
@@ -32,7 +33,7 @@ const options = {
 		},
 		servers: [
 			{
-				url: "http://localhost:4000",
+				url: "http://localhost:3000",
 			},
 		],
 	},
@@ -65,7 +66,6 @@ app.use('/joueur',joueurRouter)
 app.use('/user',userRouter)
 app.use('/equipe',equipeRouter)
 app.use('/ligue',ligueRouter)
-app.use('/arbitre',arbitreRouter)
 app.use('/match',matchRouter)
 //app.use('/upload',uploadRouter)
 app.use('/stade',stadeRouter)

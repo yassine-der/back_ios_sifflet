@@ -27,6 +27,80 @@ const storage = multer.diskStorage({
 const {getEquipe, getEquipeId,addEquipe,deleteEquipe,addJoueurToEquipe,getMyequipe} = require('../controllers/equipeController')
 const {protect,ProprietaireDeStade} = require('../middlware/authmiddlware')
 
+
+
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     equipe:
+ *       type: object
+ *       required:
+ *         - image
+ *         - nom
+ *         - description
+ *         - point
+ *         - win
+ *         - lose
+ *         - null
+ *       properties:
+ *         image:
+ *           type: string
+ *           description: The picture of the equipe
+ *         nom:
+ *           type: string
+ *           description: The name of the equipe
+ *         description:
+ *           type: string
+ *           description: The description of the equipe
+ *         point:
+ *           type: Number
+ *           description: The number of points
+ *         win:
+ *           type: Number
+ *           description: The number of wins
+ *         lose:
+ *           type: Number
+ *           description: The number of losts
+ *         null:
+ *           type: Number
+ *           description: The number of points
+ *         score:
+ *           type: Number
+ *           description: The number of wins
+ *         nbj:
+ *           type: Number
+ *           description: The number of losts
+ *         appar:
+ *           type: Number
+ *           description: The number of losts
+ */
+
+ /**
+  * @swagger
+  * tags:
+  *   name: equipes
+  *   description: The equipes managing API
+  */
+
+/**
+ * @swagger
+ * /equipes:
+ *   get:
+ *     summary: Returns the list of all the equipes
+ *     tags: [equipes]
+ *     parameters:
+ *       - in: path
+ *         name: nom
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The equipe name
+ *     responses:
+ *       200:
+ *         description: The list of the equipes
+ */
 //all
 router.route('/').post(protect,ProprietaireDeStade,upload.single('image'),addEquipe)
 router.route('/').get(protect,getEquipe)
