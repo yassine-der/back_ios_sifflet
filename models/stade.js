@@ -38,13 +38,6 @@ const stadeSchema = new mongoose.Schema({
         type:String,
         //required: true
     },
-    payementResult:{
-        id: {type:String},
-        status:{type:String},
-        update_time:{type:String},
-        email_address:{type:String}
-
-    },
     taxPrice:{
         type:Number,
         //required: true,

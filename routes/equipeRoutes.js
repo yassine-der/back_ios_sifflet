@@ -56,7 +56,7 @@ const {protect,ProprietaireDeStade} = require('../middlware/authmiddlware')
  *           description: The description of the equipe
  *         point:
  *           type: Number
- *           description: The number of points
+ *           description: The number of points of the equipe
  *         win:
  *           type: Number
  *           description: The number of wins
@@ -65,24 +65,37 @@ const {protect,ProprietaireDeStade} = require('../middlware/authmiddlware')
  *           description: The number of losts
  *         null:
  *           type: Number
- *           description: The number of points
+ *           description: The number of null
  *         score:
  *           type: Number
- *           description: The number of wins
+ *           description: The score of the equipe
  *         nbj:
  *           type: Number
- *           description: The number of losts
+ *           description: The number of players 
  *         appar:
- *           type: Number
- *           description: The number of losts
+ *           type: Boolean
+ *           description: The equipe belongs to a ligue
  */
 
- /**
-  * @swagger
-  * tags:
-  *   name: equipes
-  *   description: The equipes managing API
-  */
+/**
+ * @swagger
+ * /equipes:
+ *   post:
+ *     summary: upload the list of all the equipes
+ *     tags: [equipes]
+ *     parameters:
+ *       - in: path
+ *         name: nom
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The equipe name
+ *     responses:
+ *       200:
+ *         description: The list of the equipes
+ */
+router.route('/').post(protect,ProprietaireDeStade,upload.single('image'),addEquipe)
+
 
 /**
  * @swagger
@@ -101,11 +114,29 @@ const {protect,ProprietaireDeStade} = require('../middlware/authmiddlware')
  *       200:
  *         description: The list of the equipes
  */
-//all
-router.route('/').post(protect,ProprietaireDeStade,upload.single('image'),addEquipe)
 router.route('/').get(protect,getEquipe)
 router.route('/my').get(protect,getMyequipe)
 
+
+/**
+ * @swagger
+ * /equipes/{id}:
+ *   get:
+ *     summary: Get the equipe by id
+ *     tags: [equipes]
+ *     parameters:
+ *       - in: path
+ *         name: nom
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The equipe id
+ *     responses:
+ *       200:
+ *         description: The equipe by id
+ *       404:
+ *         description: The equipe was not found
+ */
 router.route('/:id').get(getEquipeId,protect).put(protect,addJoueurToEquipe)
 
 
