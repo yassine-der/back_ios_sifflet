@@ -62,7 +62,7 @@ const {protect,ProprietaireDeStade} = require('../middlware/authmiddlware')
  *     tags: [equipes]
  *     responses:
  *       200:
- *         description: The list of the equipes
+ *         description: The list of the equipe
  */
 router.route('/').get(protect,getEquipe).post(protect,ProprietaireDeStade,addEquipe)
 
