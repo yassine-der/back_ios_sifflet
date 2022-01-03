@@ -61,6 +61,25 @@ const {protect,ProprietaireDeStade } = require('../middlware/authmiddlware')
  *         description: The list of the stades
  */
 
+/**
+ * @swagger
+ * /stades:
+ *   post:
+ *     summary: Returns the list of all the stades
+ *     tags: [stades]
+ *     produces:
+ *     - application/json
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The stades id
+ *     responses:
+ *       200:
+ *         description: The list of the stades
+ */
 router.route('/').get(getStade).post(protect,ProprietaireDeStade,addStade)
 router.route('/my').get(protect,ProprietaireDeStade,getMystade)
 
