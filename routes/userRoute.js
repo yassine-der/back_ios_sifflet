@@ -22,13 +22,16 @@ const storage = multer.diskStorage({
   const upload = multer({storage: storage,fileFilter: fileFilter
       })
 
-const { authUser,getuserProfile,registerUser,updateUserProfile,getusers,deleteUser,getUserById,updateUser,googleLogin,verifEmail} = require('../controllers/userController')
+const { authUser,getuserProfile,registerUser,updateUserProfile,getusers,deleteUser,getUserById,updateUser,googleLogin,verifEmail,motdepasseOublier,updateUserPassword} = require('../controllers/userController')
 const {protect,ProprietaireDeStade} = require('../middlware/authmiddlware')
 router.route('/').post(upload.single('image'),registerUser).get(protect,getusers)
 router.post('/login',authUser)
 router.route('/profile')
       .get(protect,getuserProfile)
       .put(protect,updateUserProfile)
+      router.route('/motDePasseOublier').put(motdepasseOublier)
+      router.route('/hupdatemote').put(updateUserPassword)
+
 router.route('/:id').delete(protect,deleteUser)
                   .get(protect,getUserById)
                   .put(updateUser)

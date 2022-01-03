@@ -28,6 +28,43 @@ const authUser = AsyncHandler(async(req,res) => {
 
 } 
 })   
+const motdepasseOublier = AsyncHandler(async(req,res) => {
+    const{email} =req.body
+
+    const userExist = await User.findOne({email})
+    
+   
+   
+   
+   
+   if(userExist){
+    userExist.verifCode = Math.floor(100000 + Math.random() * 900000)
+    res.status(200).json({_id:userExist._id})
+
+     const mailOptions = {
+        from: '"Sifflet" <yassine.derbel1@esprit.tn>',
+        to: userExist.email,
+        subject: 'Sifflet - changer votre mot de passe ',
+        html:  ` <h2> hi ${userExist.nom}! Ecrire ce code pour changer votre mot de passe </h2>
+            <h4> ${userExist.verifCode } </h4>
+        `
+      }
+
+      transporter.sendMail(mailOptions, function(error, info){
+        if(error){
+          console.log(error)
+        }else {
+          console.log('Verification motDepasse  is sent to your gmail')
+        }
+      })
+      await userExist.save()
+
+   }else{
+       res.status(400)
+       throw  new Error('invalid user data')
+   }
+}) 
+
 const getuserProfile = AsyncHandler(async(req,res) => {
     const user= await User.findById(req.user._id)
 
@@ -102,7 +139,6 @@ const registerUser = AsyncHandler(async(req,res) => {
 
            
         `
-        //<a href="http://${req.headers.host}/users/verify-email?token=${user.emailToken}">Verify your email</a>
       }
 
       transporter.sendMail(mailOptions, function(error, info){
@@ -149,8 +185,36 @@ const verifEmail = AsyncHandler(async(req, res)=>{
       
     }
   })
-const updateUserProfile = AsyncHandler(async(req,res) => {
-    const user= await User.findById(req.user._id)
+  const updateUserProfile = (async(req,res) => {
+    const user= await User.findById(req.req._id)
+
+    if(user){
+        user.nom = req.body.nom || user.nom
+        user.prenom = req.body.prenom || user.prenom
+        user.email = req.body.email || user.email
+        if(req.body.motdepasse){
+            user.motdepasse = req.body.motdepasse
+        }
+        
+        const updateUser = await user.save()
+
+        res.status(201).json({
+            //_id : updateUser._id,
+            nom: updateUser.nom,
+            prenom : updateUser.prenom,
+            email: updateUser.email,
+            isProprietaireDestade : updateUser.isProprietaireDestade,
+            //token: generateToken(updateUser._id)
+
+
+        })
+    }else{
+        res.status(404)
+        throw new Error('user not found')
+    }
+})
+const updateUserPassword = (async(req,res) => {
+    const user= await User.findById(req.body._id)
 
     if(user){
         user.nom = req.body.nom || user.nom
@@ -284,4 +348,4 @@ module.exports ={authUser,
                  ,getusers,
                  deleteUser,
                  getUserById,
-                 updateUser,googleLogin,verifEmail}
+                 updateUser,googleLogin,verifEmail,motdepasseOublier,updateUserPassword}
