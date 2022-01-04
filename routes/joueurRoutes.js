@@ -88,7 +88,7 @@ router.route('/my').get(protect,getMyJoueur)
 
 /**
  * @swagger
- * /joueurs:
+ * /joueur:
  *   get:
  *     summary: Returns the list of all the players
  *     tags: [joueurs]

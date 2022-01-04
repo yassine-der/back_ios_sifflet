@@ -186,7 +186,7 @@ const verifEmail = AsyncHandler(async(req, res)=>{
     }
   })
   const updateUserProfile = (async(req,res) => {
-    const user= await User.findById(req.req._id)
+    const user= await User.findById(req.body._id)
 
     if(user){
         user.nom = req.body.nom || user.nom

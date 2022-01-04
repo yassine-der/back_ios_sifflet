@@ -60,7 +60,7 @@ const {protect,ProprietaireDeStade} = require('../middlware/authmiddlware')
 //all
 /**
  * @swagger
- * /ligues:
+ * /ligue:
  *   get:
  *     summary: Returns the list of all the ligues
  *     tags: [ligues]
@@ -91,7 +91,7 @@ router.route('/classement').put(protect,classement)
 
 /**
  * @swagger
- * /ligues/{id}:
+ * /ligue/{id}:
  *   get:
  *     summary: Get the ligue by id
  *     tags: [ligues]
