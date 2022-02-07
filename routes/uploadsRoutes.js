@@ -1,4 +1,4 @@
-const express =require('express')
+/*const express =require('express')
 const multer = require('multer')
 const router = express.Router()
 const path = require('path')
@@ -29,9 +29,21 @@ const upload = multer({
     }
 })
 
-router.post('/',upload.single('photo '),(req,res)=>{
-    res.sznd(`/${req.file.path}`)
+/*
+const upload = multer()
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads')
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.fieldname + '-' + Date.now())
+  }
 })
 
+router.post('/',upload.single('photo'),(req,res)=>{
+    res.send(`/${req.file.path}`)
+})
 
 module.exports = router
+*/

@@ -6,6 +6,11 @@ const matchSchema = new mongoose.Schema({
         type: Number,
         required : true
     }*/
+    /*ligue: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Ligue'
+    },*/
     user: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
@@ -19,12 +24,13 @@ const matchSchema = new mongoose.Schema({
         type:Date,
         
     },
-    equipe: {
-        type:String,
-    },
-    equipes_id: [{type: mongoose.Schema.Types.ObjectId,
+    
+    equipe_A_id: {type: mongoose.Schema.Types.ObjectId,
         ref:'Equipe'
-      }],
+    },
+    equipe_B_id: {type: mongoose.Schema.Types.ObjectId,
+        ref:'Equipe'
+    },
     
 },
 {

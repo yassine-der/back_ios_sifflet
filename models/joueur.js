@@ -3,22 +3,22 @@ const mongoose = require('mongoose')
 const joueurSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
+        //required: true,
         ref: 'User'
     },
-    photo: {
+    image: {
         type:String,
-        //required: true,
+        required: true,
        
     },
     nom: {
         type:String,
         required:true
     },
-    /*prenom: {
+    prenom: {
         type:String,
         required:true
-    },*/
+    },
     age: {
         type: String,
         required:true

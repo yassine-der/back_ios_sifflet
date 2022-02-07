@@ -6,36 +6,37 @@ const stadeSchema = new mongoose.Schema({
         required: true,
         ref: 'User'
     },
-    /*photo: {
+    image: {
         type:String,
         required:true
-    },*/
+    },
     nom: {
         type:String,
         required:true
     },
-    address: {
-        type:String,
-        required:true
-    },
+    lat:{
+     type:String,
+    required:true
+     },
+    lon:{
+    type:String,
+    required:true
+},
     discription: {
         type:String,
-        //required:true
+        required:true
     },
     ligues_id: [{
         type: mongoose.Schema.Types.ObjectId,
         ref:'Ligue'
       }],
+      num: {
+        type:String,
+        //required:true
+    },
     payementMethods:{
         type:String,
         //required: true
-    },
-    payementResult:{
-        id: {type:String},
-        status:{type:String},
-        update_time:{type:String},
-        email_address:{type:String}
-
     },
     taxPrice:{
         type:Number,

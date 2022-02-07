@@ -27,7 +27,7 @@ const protect = AsyncHandler(async(req,res,next) =>{
     next()
 })
 const ProprietaireDeStade = (req,res,next) =>{
-    if(req.user &&req.user.isProprietaireDestade){
+    if(req.user &&req.user.isProprietaireDestade=="ProprietaireDestade"){
         next()
     } else {
         res.status(401)

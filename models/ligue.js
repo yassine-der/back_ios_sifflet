@@ -2,18 +2,18 @@ const mongoose= require('mongoose')
 const equipe = require('./equipe')
 
 const ligueSchema = new mongoose.Schema({
-    /*id: {
-        type: Number,
-        required : true
-    },*/
+    ligue: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref : 'Ligue'
+    },
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
+        //required: true,
         ref: 'User'
     },
-    photo: {
+    image: {
         type:String,
-        //required:true
+        required:true
     },
     nom: {
         type:String,
@@ -24,13 +24,24 @@ const ligueSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    liguecapacite:{
-        type: Number,
-        required:true,
-    },
-    equipes_ids: [{type: mongoose.Schema.Types.ObjectId,
+    
+    equipes_ids: [{
+        type: mongoose.Schema.Types.ObjectId,
         ref:'Equipe'}],
+    equipe_A_id: [{
+        type: mongoose.Schema.Types.ObjectId,
+            ref:'Equipe'}],
+    equipe_B_id: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'Equipe'}],
+
+
+    matchs_ids: [{type: mongoose.Schema.Types.ObjectId,
+        ref:'Match'}],
+        nbE:{type:Number}
+
 },
+
 {
   timestamps :true
 })
