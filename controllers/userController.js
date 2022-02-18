@@ -112,7 +112,7 @@ const registerUser = AsyncHandler(async(req,res) => {
        motdepasse,
        isProprietaireDestade,
        verifCode: Math.floor(100000 + Math.random() * 900000),
-       isVerified: false,
+       isVerified: true,
 
 
 
